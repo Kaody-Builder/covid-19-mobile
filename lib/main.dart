@@ -1,23 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong/latlong.dart';
+import 'package:map_controller/map_controller.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -28,15 +24,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -44,68 +31,103 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  MapController mapController;
+  StatefulMapController statefulMapController;
+  StreamSubscription<StatefulMapControllerStateChange> sub;
+  Map geojson = {
+    "type": "Feature",
+    "properties": {},
+    "geometry": {
+      "type": "Line",
+      "coordinates": [
+        [47.524609, -18.943591],
+        [47.524596, -18.9436],
+        [47.524508, -18.943652],
+        [47.524447, -18.943692],
+        [47.524342, -18.943767],
+        [47.524289, -18.943807],
+        [47.524208, -18.943861],
+        [47.524133, -18.943904],
+        [47.524175, -18.943972],
+        [47.524408, -18.944461],
+        [47.524442, -18.944538],
+        [47.524501, -18.944534],
+        [47.524571, -18.944537],
+        [47.524666, -18.94455],
+        [47.524707, -18.944562],
+        [47.524843, -18.94457],
+        [47.525096, -18.944612],
+        [47.525434, -18.944708],
+        [47.526004, -18.944941],
+        [47.528626, -18.946096],
+        [47.530086, -18.946851],
+        [47.530641, -18.947072],
+        [47.53121, -18.947253],
+        [47.531882, -18.947411],
+        [47.532816, -18.947566],
+        [47.532918, -18.947558],
+        [47.532927, -18.947553],
+        [47.532939, -18.947531],
+        [47.53297, -18.947444],
+        [47.532984, -18.947399],
+        [47.532997, -18.947371],
+        [47.533018, -18.947326],
+        [47.53304, -18.94728],
+        [47.533074, -18.947245],
+        [47.533234, -18.947159],
+        [47.533327, -18.947077],
+        [47.533623, -18.946527],
+        [47.533718, -18.946396]
+      ]
+    }
+  };
+  void loadData() async {
+    print("Loading geojson data");
+    statefulMapController.addLine(name: "test", points: [
+      for (final i in geojson["geometry"]["coordinates"]) LatLng(i[1], i[0])
+    ],width: 5.0);
+    statefulMapController.addMarker(marker: Marker(builder: (_) => Icon(Icons.location_on)) , name: "mark");
+  }
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    mapController = MapController();
+    statefulMapController = StatefulMapController(mapController: mapController);
+    statefulMapController.onReady.then((_) => loadData());
+    sub = statefulMapController.changeFeed.listen((change) => setState(() {}));
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          setState((){});
+        }),
+        body: FlutterMap(
+          mapController: mapController,
+          options: MapOptions(
+            center: LatLng(-18.9201000, 47.5237000),
+            zoom: 13.0,
+          ),
+          layers: [
+            TileLayerOptions(
+                urlTemplate:
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                subdomains: ['a', 'b', 'c']),
+            MarkerLayerOptions(markers: statefulMapController.markers),
+            PolylineLayerOptions(polylines: statefulMapController.lines),
+            PolygonLayerOptions(polygons: statefulMapController.polygons)
+          ],
+        ));
+  }
+
+  @override
+  void dispose() {
+    sub.cancel();
+    super.dispose();
   }
 }
