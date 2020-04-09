@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'questionnaire.dart';
 
 
 final colorP = Colors.teal; 
@@ -113,7 +114,13 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                       margin: EdgeInsets.only(left: 15),
                       child: FlatButton(
                         color: colorP,
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context){
+                              return QuestionnairePage();
+                            })
+                          );
+                        },
                         child: Text("Continuer", style: TextStyle(color: Colors.white)),
                       )
                     )
@@ -131,7 +138,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                     _codenonreceive();
                   },
                   child: Text(
-                    "Je n'ai réçu pas le code.",
+                    "Je n'ai pas réçu le code.",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: colorP),
                   )

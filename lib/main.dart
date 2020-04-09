@@ -161,7 +161,8 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context){
           return ConfirmationPage(numero: numeroGet);
-        }));
+        })
+      );
     } 
     else _alertErrorInput();
     
