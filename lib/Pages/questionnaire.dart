@@ -89,63 +89,10 @@ class _QuestionnairePage extends State<QuestionnairePage>{
                       style: TextStyle(color: Colors.black54),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(top:15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width/16),
-                          alignment: Alignment.centerLeft,
-                          child:  Column(
-                            children: <Widget>[
-                              Text("English"),
-                              Radio(
-                                groupValue: radioval,
-                                value: 0,
-                                onChanged: (int value){
-                                  setState(() {
-                                    radioval = value;
-                                    _langueID = "en_US";
-                                  });
-                                  print(value);
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-
-                        Container(
-                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width/16),
-                          alignment: Alignment.centerRight,
-                          child: Column(
-                            children: <Widget>[
-                              Text("Français"),
-                              Radio(
-                                groupValue: radioval,
-                                value: 1,
-                                onChanged: (int value){
-                                  setState(() {
-                                    radioval = value;
-                                    _langueID = "fr_FR";
-                                    
-                                  });
-                                  print(value);
-                                },
-                              )
-                            ],
-                        )
-                        )
-                        
-                        
-                      
-                      ],
-                    )
-                  ),
+                  
 
                   Container(
-                    margin: EdgeInsets.only(top:10, bottom: 15, left: 10, right: 10),
+                    margin: EdgeInsets.only(top:25, bottom: 15, left: 10, right: 10),
                 
                     child: FlatButton(
                       color: Colors.teal,
