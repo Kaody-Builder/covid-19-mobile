@@ -56,7 +56,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
   void errorListener(SpeechRecognitionError error){
     print(error.errorMsg);
     if (error.errorMsg == "error_busy")
-      _errorMessage("Votre micro est déjà utiliser");
+      _errorMessage("Your mic is busy");
     else
       _errorMessage("");
 
@@ -77,7 +77,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
                   Container(
                     margin: EdgeInsets.only(top:20),
                     child: Text(
-                      "Décriver le signalement",
+                      "Explain your symptoms",
                       textScaleFactor: 2, 
                       style: TextStyle(fontFamily: "Arial", color: Color(0xFF464637), fontWeight: FontWeight.bold),
                     ) 
@@ -85,7 +85,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 5),
                     child: Text(
-                      "Expliquer le cas de votre signalement",
+                      "Please share all symptoms you are experiencing",
                       style: TextStyle(color: Colors.black54),
                     ),
                   ),
@@ -104,7 +104,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text( !speech.isListening ? "Parler" : "Arreter", style: TextStyle(color: Colors.white)),
+                          Text( !speech.isListening ? "Tap to speak" : "Stop", style: TextStyle(color: Colors.white)),
                           Icon( !speech.isListening ? Icons.play_arrow : Icons.stop, color: Colors.white,)
                         ],
                       ),
@@ -131,14 +131,14 @@ class _QuestionnairePage extends State<QuestionnairePage>{
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(vertical: 10),
                     child: speech.isListening
-                          ? Text("En écoute")
-                          : Text("Pas en écoute")
+                          ? Text("Listening")
+                          : Text("Not Listening")
                   ),
                   Container( 
                     margin: EdgeInsets.only(top: 10),
                     alignment: Alignment.center,
                     child: Text(
-                      nbrMs>0 ? "Vous avez fait part de $nbrMs enregistrement" : "",
+                      nbrMs>0 ? "You have successfully recorded your symptoms. " : "",
                       style: TextStyle(color: Color(0xFF464637), fontWeight: FontWeight.bold)
                     )
                   )
@@ -156,7 +156,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
               print(lastres);
               terminate();
             },
-            child: Text("Terminer", style: TextStyle(fontSize: 24, color: Colors.white)),
+            child: Text("Send", style: TextStyle(fontSize: 24, color: Colors.white)),
           ),
         ),
     );

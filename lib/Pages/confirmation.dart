@@ -18,12 +18,12 @@ class ConfirmationPage extends StatefulWidget{
 class _ConfirmationPage extends State<ConfirmationPage>{
 
   int nbrMs = 0;
-  String nombreMessage = "";
+  String nombreMessage = "", sufval = "";
   @override 
   Widget build(BuildContext context){
     return  Scaffold(
       appBar: AppBar(
-        title: Text("Page de Confirmation"),
+        title: Text("Confirmation Page"),
       ),
       body: Center(
         child: Container(
@@ -37,14 +37,14 @@ class _ConfirmationPage extends State<ConfirmationPage>{
               Container(
                 margin: EdgeInsets.all(10),
                 child: Text(
-                  "Confirmation d'identité",
+                  "Identity confirmation",
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 26)
                 ),
               ),
               SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
-                  "Un $nombreMessage message contenant un code de confirmation a été envoyer au numéro:",
+                  "A $nombreMessage Confirmation code was sent to your telephone.",
                   style: TextStyle(color: Colors.black54),  
                 )
               ),
@@ -69,7 +69,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                 child: TextField(
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: "Saisissez le code de confirmation",
+                    hintText: "Enter confirmation code",
                       //border: InputBorder.none
                   ),
                   keyboardType: TextInputType.number,
@@ -101,7 +101,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                           onPressed: (){
                             Navigator.of(context).pop();
                           },
-                          child: Text("Annuler", style: TextStyle(color: Colors.black54)),
+                          child: Text("Cancel", style: TextStyle(color: Colors.black54)),
                       )
                     ),
                     Container(
@@ -115,13 +115,9 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                       child: FlatButton(
                         color: colorP,
                         onPressed: (){
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (BuildContext context){
-                              return QuestionnairePage();
-                            })
-                          );
+                          _choixSuite();
                         },
-                        child: Text("Continuer", style: TextStyle(color: Colors.white)),
+                        child: Text("Continue", style: TextStyle(color: Colors.white)),
                       )
                     )
                   ],
@@ -138,7 +134,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                     _codenonreceive();
                   },
                   child: Text(
-                    "Je n'ai pas réçu le code.",
+                    "I did not get a code.",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: colorP),
                   )
@@ -154,7 +150,10 @@ class _ConfirmationPage extends State<ConfirmationPage>{
   }
 
   void nombreMessageChange(){
-    if (nbrMs > 1) nombreMessage = nbrMs.toString() + "éme";
+    if (nbrMs > 1) {
+      sufval = nbrMs == 2 ? "nd" : "th";
+      nombreMessage = nbrMs.toString() + sufval ;
+    }
     else nombreMessage = "";
   }
 
@@ -165,24 +164,24 @@ class _ConfirmationPage extends State<ConfirmationPage>{
       builder: (BuildContext context) {
         return AlertDialog(
           
-          title: Text('Code de cofirmation', style: TextStyle(color: Color(0xFF464637))),
+          title: Text('Confirmation Code', style: TextStyle(color: Color(0xFF464637))),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("Nous vous prions d'attendre quelque minutes.\n"),
-                Text("Vous pouvez renvoyer le code.")
+                Text("Please wait few minutes"),
+                Text("You can resend new code.")
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Annuler'),
+              child: Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('Renvoyer'),
+              child: Text('Resend'),
               onPressed: () {
                 setState(() {
                   nbrMs++;
@@ -192,6 +191,37 @@ class _ConfirmationPage extends State<ConfirmationPage>{
               },
             ),
           ],
+        );
+      },
+    );
+  }
+
+  Future<void> _choixSuite() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text("Choose an action."),
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.settings_voice),
+              title: Text("Record voice"),
+              onTap: (){
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context){
+                    return QuestionnairePage();
+                  })
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.sms),
+              title: Text("Fill the form"),
+              onTap: (){},
+            )
+          ],
+          
         );
       },
     );

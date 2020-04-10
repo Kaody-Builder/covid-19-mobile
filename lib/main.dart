@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Covid-19 Tracker',
+      title: 'mayday',
       theme: ThemeData(
         primarySwatch: colorP,
       ),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: 'Covid-19 Tracker'),
+      home: MyHomePage(title: 'mayday'),
     );
   }
 }
@@ -41,8 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
    
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        // centerTitle: true,
         title: Text(widget.title),
+        actions: <Widget>[
+
+        ],
         
       ),
       body: Center(
@@ -57,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                "COVID-19 Tracker",
+                "mayday",
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
                 textScaleFactor: 2,
               ),
@@ -65,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               margin: EdgeInsets.only(top:5),
               child: Text(
-                "Solution signalement de cas de Corona Virus à Madagascar",
+                "Health Assessment and Emergency Signal Solution ",
                 style: TextStyle(color: Colors.black54, fontSize: 10)
               ),
             )
@@ -86,57 +89,59 @@ class _MyHomePageState extends State<MyHomePage> {
           //   ),
           //   borderRadius: BorderRadius.circular(12),
           // ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: Text(
-                  "Entrer votre numéro de téléphone pour confirmer \nvotre implication dans vos signalements:",
-                  maxLines: 2,
-                  style: TextStyle(color: Colors.black54, fontSize: 13.5),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: MediaQuery.of(context).size.height/22,
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: MediaQuery.of(context).size.width/12),
-                // decoration: BoxDecoration(
-                //   border: Border.all(
-                //     color: Colors.grey,
-                //     width: 1,
-                //   ),
-                //   borderRadius: BorderRadius.circular(12),
-                // ),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: numeroChamp,
-                  decoration: InputDecoration(
-                    hintText: "Votre numéro de téléphone.",
-                      //border: InputBorder.none
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  child: Text(
+                    "Please enter your contact information to\n confirm your identity.",
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.black54, fontSize: 13.5),
                   ),
-                  keyboardType: TextInputType.text,
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical:5),
-                width: MediaQuery.of(context).size.width*(5/6),
-                decoration: BoxDecoration(
-                  color: colorP,
-                  border: Border.all(color: colorP, width: 1),
-                  borderRadius: BorderRadius.circular(6)
+                Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height/22,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: MediaQuery.of(context).size.width/12),
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(
+                  //     color: Colors.grey,
+                  //     width: 1,
+                  //   ),
+                  //   borderRadius: BorderRadius.circular(12),
+                  // ),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: numeroChamp,
+                    decoration: InputDecoration(
+                      hintText: "Your contact number",
+                        //border: InputBorder.none
+                    ),
+                    keyboardType: TextInputType.text,
+                  ),
                 ),
-                child: FlatButton(
-                  color: colorP,
-                  onPressed: (){
-                    traitement(numeroChamp.text);
-                  },
-                  child: Text("Signaler un cas", style: TextStyle(color: Colors.white)),
-                ),
-              )
+                Container(
+                  margin: EdgeInsets.symmetric(vertical:5),
+                  width: MediaQuery.of(context).size.width*(5/6),
+                  decoration: BoxDecoration(
+                    color: colorP,
+                    border: Border.all(color: colorP, width: 1),
+                    borderRadius: BorderRadius.circular(6)
+                  ),
+                  child: FlatButton(
+                    color: colorP,
+                    onPressed: (){
+                      traitement(numeroChamp.text);
+                    },
+                    child: Text("Confirm", style: TextStyle(color: Colors.white)),
+                  ),
+                )
 
-            ],
-          ),
+              ],
+            ),
+        )
         ),
       ),
 
@@ -175,11 +180,11 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           
-          title: Text('Numéro incorrecte', style: TextStyle(color: Color(0xFFe74c3c))),
+          title: Text('Invalid Number', style: TextStyle(color: Color(0xFFe74c3c))),
           
           actions: <Widget>[
             FlatButton(
-              child: Text('Fermer'),
+              child: Text('Close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
