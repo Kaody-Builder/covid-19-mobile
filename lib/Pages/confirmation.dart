@@ -130,7 +130,6 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                 child: FlatButton(
                   color: Colors.white,
                   onPressed: (){
-                    nbrMs++;
                     _codenonreceive();
                   },
                   child: Text(

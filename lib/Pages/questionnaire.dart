@@ -154,7 +154,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
           child: FlatButton(
             onPressed: (){
               print(lastres);
-              terminate();
+              _success();
             },
             child: Text("Send", style: TextStyle(fontSize: 24, color: Colors.white)),
           ),
@@ -176,7 +176,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
       }
     }
     else{
-      _errorMessage("Nous avons pas pu se connecter avec votre micro.");
+      _errorMessage("We have a problem .");
     }
   }
 
@@ -198,7 +198,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
       builder: (BuildContext context) {
         return AlertDialog(
           
-          title: Text("Une erreur s'est produite", style: TextStyle(color: Color(0xFFe74c3c))),
+          title: Text("An error was occured", style: TextStyle(color: Color(0xFF464637))),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -209,6 +209,34 @@ class _QuestionnairePage extends State<QuestionnairePage>{
           actions: <Widget>[
             FlatButton(
               child: Text('Fermer'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      
+    });
+  }
+
+  Future<void> _success() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          
+          title: Text("Successfull", style: TextStyle(color: Color(0xFF464637))),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("sent "),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

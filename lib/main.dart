@@ -1,6 +1,7 @@
-import 'package:covid19_tracker/Pages/confirmation.dart';
-import 'package:flutter/material.dart';
 import 'Pages/confirmation.dart';
+import 'Pages/map.dart';
+import 'package:flutter/material.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -34,7 +35,14 @@ class _MyHomePageState extends State<MyHomePage> {
  
   final colorP = Colors.teal;
   final numeroChamp = TextEditingController();
+  
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,16 @@ class _MyHomePageState extends State<MyHomePage> {
         // centerTitle: true,
         title: Text(widget.title),
         actions: <Widget>[
-
+            IconButton(
+              icon: Icon(Icons.public),
+              onPressed: (){
+                
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context)=>MapPage()
+                  )
+                );
+              },
+            )
         ],
         
       ),
