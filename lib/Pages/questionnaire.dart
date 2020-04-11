@@ -154,6 +154,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
           child: FlatButton(
             onPressed: (){
               print(lastres);
+              terminate();
               _success();
             },
             child: Text("Send", style: TextStyle(fontSize: 24, color: Colors.white)),
@@ -249,12 +250,12 @@ class _QuestionnairePage extends State<QuestionnairePage>{
 
   Future<void> terminate() async{
     http.Response rep = await http.post(
-      'http://192.168.43.122:5000/api/',
+      'http://mayday-kaody.herokuapp.com/api/symptoms/',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, List>{
-        'data': lastres,
+        'text': lastres,
       }),
     );
 
@@ -262,7 +263,8 @@ class _QuestionnairePage extends State<QuestionnairePage>{
       print("ok");
     }
     else{
-      _errorMessage("$rep.statusCode");
+      print(rep.statusCode);
+      // _errorMessage("${rep.statusCode}");
     }
 
   }

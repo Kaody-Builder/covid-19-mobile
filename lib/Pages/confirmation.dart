@@ -125,7 +125,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                 
               ),
                Container(
-                 margin: EdgeInsets.symmetric(vertical: 10),
+                 margin: EdgeInsets.only(top: 8, bottom: 5),
                 alignment: Alignment.center,
                 child: FlatButton(
                   color: Colors.white,
