@@ -155,7 +155,7 @@ class _QuestionnairePage extends State<QuestionnairePage>{
             onPressed: (){
               print(lastres);
               terminate();
-              _success();
+              
             },
             child: Text("Send", style: TextStyle(fontSize: 24, color: Colors.white)),
           ),
@@ -220,18 +220,29 @@ class _QuestionnairePage extends State<QuestionnairePage>{
     });
   }
 
-  Future<void> _success() async {
+  Future<void> _success(double resIn) async {
+    resIn *= 100;
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           
-          title: Text("Successfull", style: TextStyle(color: Color(0xFF464637))),
+          title: Text("Result", style: TextStyle(color: Color(0xFF464637))),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("sent "),
+                Text("the result of your diagnosis", textAlign: TextAlign.center),
+                Text(
+                  "${resIn.toStringAsFixed(2)} %",
+                  textScaleFactor: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color:
+                  resIn<40 ? Color(0xFF00d97e) : resIn<70 ? Color(0xFFFFAB00) : Color(0xFFe74c3c),
+                  fontWeight: FontWeight.bold
+                  ),
+                )
+                
               ],
             ),
           ),
@@ -254,13 +265,17 @@ class _QuestionnairePage extends State<QuestionnairePage>{
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, List>{
-        'text': lastres,
+      body: jsonEncode(<String, String>{
+        'text': lastres.toString()
       }),
     );
 
     if (rep.statusCode == 201){
       print("ok");
+      print(rep.body);
+      Map <String, dynamic> data = json.decode(rep.body);
+      // double res = double.parse(data['data']);
+      _success(data['data']);
     }
     else{
       print(rep.statusCode);

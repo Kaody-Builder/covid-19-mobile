@@ -49,7 +49,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                 )
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
+                margin: EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   widget.numero,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -125,7 +125,7 @@ class _ConfirmationPage extends State<ConfirmationPage>{
                 
               ),
                Container(
-                 margin: EdgeInsets.only(top: 8, bottom: 5),
+                 margin: EdgeInsets.only(top: 8, bottom: 2),
                 alignment: Alignment.center,
                 child: FlatButton(
                   color: Colors.white,
